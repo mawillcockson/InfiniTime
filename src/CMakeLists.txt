@@ -456,6 +456,7 @@ list(APPEND SOURCE_FILES
         displayapp/screens/WatchFaceAnalog.cpp
         displayapp/screens/WatchFaceDigital.cpp
         displayapp/screens/WatchFaceTerminal.cpp
+        displayapp/screens/WatchFaceTerrible.cpp
         displayapp/screens/PineTimeStyle.cpp
 
         ##
@@ -513,6 +514,8 @@ list(APPEND SOURCE_FILES
         displayapp/fonts/jetbrains_mono_42.c
         displayapp/fonts/lv_font_sys_48.c
         displayapp/fonts/open_sans_light.c
+        displayapp/fonts/italics_and_f_it_time.c
+        displayapp/fonts/italics_and_f_it_text.c
         displayapp/lv_pinetime_theme.c
 
         systemtask/SystemTask.cpp
