@@ -8,8 +8,8 @@
 using namespace Pinetime::Applications::Screens;
 
 namespace {
-  static void event_handler(lv_obj_t* obj, lv_event_t event) {
-    SettingWakeUp* screen = static_cast<SettingWakeUp*>(obj->user_data);
+  void event_handler(lv_obj_t* obj, lv_event_t event) {
+    auto* screen = static_cast<SettingWakeUp*>(obj->user_data);
     screen->UpdateSelected(obj, event);
   }
 }
@@ -42,7 +42,7 @@ SettingWakeUp::SettingWakeUp(Pinetime::Applications::DisplayApp* app, Pinetime::
 
   optionsTotal = 0;
   cbOption[optionsTotal] = lv_checkbox_create(container1, nullptr);
-  lv_checkbox_set_text_static(cbOption[optionsTotal], " Single Tap");
+  lv_checkbox_set_text_static(cbOption[optionsTotal], "Single Tap");
   cbOption[optionsTotal]->user_data = this;
   lv_obj_set_event_cb(cbOption[optionsTotal], event_handler);
   if (settingsController.isWakeUpModeOn(Pinetime::Controllers::Settings::WakeUpMode::SingleTap)) {
@@ -50,7 +50,7 @@ SettingWakeUp::SettingWakeUp(Pinetime::Applications::DisplayApp* app, Pinetime::
   }
   optionsTotal++;
   cbOption[optionsTotal] = lv_checkbox_create(container1, nullptr);
-  lv_checkbox_set_text_static(cbOption[optionsTotal], " Double Tap");
+  lv_checkbox_set_text_static(cbOption[optionsTotal], "Double Tap");
   cbOption[optionsTotal]->user_data = this;
   lv_obj_set_event_cb(cbOption[optionsTotal], event_handler);
   if (settingsController.isWakeUpModeOn(Pinetime::Controllers::Settings::WakeUpMode::DoubleTap)) {
@@ -58,7 +58,7 @@ SettingWakeUp::SettingWakeUp(Pinetime::Applications::DisplayApp* app, Pinetime::
   }
   optionsTotal++;
   cbOption[optionsTotal] = lv_checkbox_create(container1, nullptr);
-  lv_checkbox_set_text_static(cbOption[optionsTotal], " Raise Wrist");
+  lv_checkbox_set_text_static(cbOption[optionsTotal], "Raise Wrist");
   cbOption[optionsTotal]->user_data = this;
   lv_obj_set_event_cb(cbOption[optionsTotal], event_handler);
   if (settingsController.isWakeUpModeOn(Pinetime::Controllers::Settings::WakeUpMode::RaiseWrist)) {
@@ -66,7 +66,7 @@ SettingWakeUp::SettingWakeUp(Pinetime::Applications::DisplayApp* app, Pinetime::
   }
   optionsTotal++;
   cbOption[optionsTotal] = lv_checkbox_create(container1, nullptr);
-  lv_checkbox_set_text_static(cbOption[optionsTotal], " Shake Wake");
+  lv_checkbox_set_text_static(cbOption[optionsTotal], "Shake Wake");
   cbOption[optionsTotal]->user_data = this;
   lv_obj_set_event_cb(cbOption[optionsTotal], event_handler);
   if (settingsController.isWakeUpModeOn(Pinetime::Controllers::Settings::WakeUpMode::Shake)) {

@@ -26,7 +26,7 @@ namespace Pinetime {
                           Controllers::DateTime& dateTimeController,
                           Controllers::Battery& batteryController,
                           Controllers::Ble& bleController,
-                          Controllers::NotificationManager& notificatioManager,
+                          Controllers::NotificationManager& notificationManager,
                           Controllers::Settings& settingsController,
                           Controllers::HeartRateController& heartRateController,
                           Controllers::MotionController& motionController);
@@ -59,7 +59,6 @@ namespace Pinetime {
         lv_obj_t* label_date;
         lv_obj_t* label_prompt_1;
         lv_obj_t* label_prompt_2;
-        lv_obj_t* backgroundLabel;
         lv_obj_t* batteryValue;
         lv_obj_t* heartbeatValue;
         lv_obj_t* stepValue;
@@ -69,7 +68,7 @@ namespace Pinetime {
         Controllers::DateTime& dateTimeController;
         Controllers::Battery& batteryController;
         Controllers::Ble& bleController;
-        Controllers::NotificationManager& notificatioManager;
+        Controllers::NotificationManager& notificationManager;
         Controllers::Settings& settingsController;
         Controllers::HeartRateController& heartRateController;
         Controllers::MotionController& motionController;

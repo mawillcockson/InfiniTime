@@ -17,7 +17,7 @@ WatchFaceTerminal::WatchFaceTerminal(DisplayApp* app,
                                      Controllers::DateTime& dateTimeController,
                                      Controllers::Battery& batteryController,
                                      Controllers::Ble& bleController,
-                                     Controllers::NotificationManager& notificatioManager,
+                                     Controllers::NotificationManager& notificationManager,
                                      Controllers::Settings& settingsController,
                                      Controllers::HeartRateController& heartRateController,
                                      Controllers::MotionController& motionController)
@@ -26,7 +26,7 @@ WatchFaceTerminal::WatchFaceTerminal(DisplayApp* app,
     dateTimeController {dateTimeController},
     batteryController {batteryController},
     bleController {bleController},
-    notificatioManager {notificatioManager},
+    notificationManager {notificationManager},
     settingsController {settingsController},
     heartRateController {heartRateController},
     motionController {motionController} {
@@ -59,13 +59,6 @@ WatchFaceTerminal::WatchFaceTerminal(DisplayApp* app,
   lv_label_set_recolor(label_time, true);
   lv_obj_align(label_time, lv_scr_act(), LV_ALIGN_IN_LEFT_MID, 0, -60);
 
-  backgroundLabel = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_click(backgroundLabel, true);
-  lv_label_set_long_mode(backgroundLabel, LV_LABEL_LONG_CROP);
-  lv_obj_set_size(backgroundLabel, 240, 240);
-  lv_obj_set_pos(backgroundLabel, 0, 0);
-  lv_label_set_text_static(backgroundLabel, "");
-
   heartbeatValue = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_recolor(heartbeatValue, true);
   lv_obj_align(heartbeatValue, lv_scr_act(), LV_ALIGN_IN_LEFT_MID, 0, 20);
@@ -96,7 +89,7 @@ void WatchFaceTerminal::Refresh() {
   bleState = bleController.IsConnected();
   bleRadioEnabled = bleController.IsRadioEnabled();
   if (bleState.IsUpdated() || bleRadioEnabled.IsUpdated()) {
-    if(!bleRadioEnabled.Get()) {
+    if (!bleRadioEnabled.Get()) {
       lv_label_set_text_static(connectState, "[STAT]#0082fc Disabled#");
     } else {
       if (bleState.Get()) {
@@ -107,7 +100,7 @@ void WatchFaceTerminal::Refresh() {
     }
   }
 
-  notificationState = notificatioManager.AreNewNotificationsAvailable();
+  notificationState = notificationManager.AreNewNotificationsAvailable();
   if (notificationState.IsUpdated()) {
     if (notificationState.Get()) {
       lv_label_set_text_static(notificationIcon, "You have mail.");
@@ -156,7 +149,7 @@ void WatchFaceTerminal::Refresh() {
     }
 
     if ((year != currentYear) || (month != currentMonth) || (dayOfWeek != currentDayOfWeek) || (day != currentDay)) {
-      lv_label_set_text_fmt(label_date, "[DATE]#007fff %04d.%02d.%02d#", short(year), char(month), char(day));
+      lv_label_set_text_fmt(label_date, "[DATE]#007fff %04d-%02d-%02d#", short(year), char(month), char(day));
 
       currentYear = year;
       currentMonth = month;

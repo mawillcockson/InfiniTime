@@ -7,6 +7,7 @@
 #include "displayapp/screens/Screen.h"
 #include "components/datetime/DateTimeController.h"
 #include "components/ble/BleController.h"
+#include "displayapp/widgets/StatusIcons.h"
 
 namespace Pinetime {
   namespace Controllers {
@@ -27,7 +28,7 @@ namespace Pinetime {
                          Controllers::DateTime& dateTimeController,
                          Controllers::Battery& batteryController,
                          Controllers::Ble& bleController,
-                         Controllers::NotificationManager& notificatioManager,
+                         Controllers::NotificationManager& notificationManager,
                          Controllers::Settings& settingsController,
                          Controllers::HeartRateController& heartRateController,
                          Controllers::MotionController& motionController);
@@ -58,10 +59,6 @@ namespace Pinetime {
         lv_obj_t* label_time;
         lv_obj_t* label_time_ampm;
         lv_obj_t* label_date;
-        lv_obj_t* backgroundLabel;
-        lv_obj_t* batteryIcon;
-        lv_obj_t* bleIcon;
-        lv_obj_t* batteryPlug;
         lv_obj_t* heartbeatIcon;
         lv_obj_t* heartbeatValue;
         lv_obj_t* stepIcon;
@@ -69,14 +66,13 @@ namespace Pinetime {
         lv_obj_t* notificationIcon;
 
         Controllers::DateTime& dateTimeController;
-        Controllers::Battery& batteryController;
-        Controllers::Ble& bleController;
-        Controllers::NotificationManager& notificatioManager;
+        Controllers::NotificationManager& notificationManager;
         Controllers::Settings& settingsController;
         Controllers::HeartRateController& heartRateController;
         Controllers::MotionController& motionController;
 
         lv_task_t* taskRefresh;
+        Widgets::StatusIcons statusIcons;
       };
     }
   }

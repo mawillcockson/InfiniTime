@@ -5,11 +5,10 @@
 using namespace Pinetime::Applications::Screens;
 
 namespace {
-  static void ButtonEventHandler(lv_obj_t* obj, lv_event_t event) {
-    List* screen = static_cast<List*>(obj->user_data);
+  void ButtonEventHandler(lv_obj_t* obj, lv_event_t event) {
+    auto* screen = static_cast<List*>(obj->user_data);
     screen->OnButtonEvent(obj, event);
   }
-
 }
 
 List::List(uint8_t screenID,
@@ -17,37 +16,14 @@ List::List(uint8_t screenID,
            DisplayApp* app,
            Controllers::Settings& settingsController,
            std::array<Applications, MAXLISTITEMS>& applications)
-  : Screen(app), settingsController {settingsController} {
+  : Screen(app), settingsController {settingsController}, pageIndicator(screenID, numScreens) {
 
   // Set the background to Black
   lv_obj_set_style_local_bg_color(lv_scr_act(), LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, lv_color_make(0, 0, 0));
 
   settingsController.SetSettingsMenu(screenID);
 
-  if (numScreens > 1) {
-    pageIndicatorBasePoints[0].x = LV_HOR_RES - 1;
-    pageIndicatorBasePoints[0].y = 0;
-    pageIndicatorBasePoints[1].x = LV_HOR_RES - 1;
-    pageIndicatorBasePoints[1].y = LV_VER_RES;
-
-    pageIndicatorBase = lv_line_create(lv_scr_act(), NULL);
-    lv_obj_set_style_local_line_width(pageIndicatorBase, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, 3);
-    lv_obj_set_style_local_line_color(pageIndicatorBase, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x111111));
-    lv_line_set_points(pageIndicatorBase, pageIndicatorBasePoints, 2);
-
-    const uint16_t indicatorSize = LV_VER_RES / numScreens;
-    const uint16_t indicatorPos = indicatorSize * screenID;
-
-    pageIndicatorPoints[0].x = LV_HOR_RES - 1;
-    pageIndicatorPoints[0].y = indicatorPos;
-    pageIndicatorPoints[1].x = LV_HOR_RES - 1;
-    pageIndicatorPoints[1].y = indicatorPos + indicatorSize;
-
-    pageIndicator = lv_line_create(lv_scr_act(), NULL);
-    lv_obj_set_style_local_line_width(pageIndicator, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, 3);
-    lv_obj_set_style_local_line_color(pageIndicator, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
-    lv_line_set_points(pageIndicator, pageIndicatorPoints, 2);
-  }
+  pageIndicator.Create();
 
   lv_obj_t* container1 = lv_cont_create(lv_scr_act(), nullptr);
 
@@ -68,7 +44,7 @@ List::List(uint8_t screenID,
     if (applications[i].application != Apps::None) {
 
       itemApps[i] = lv_btn_create(container1, nullptr);
-      lv_obj_set_style_local_bg_opa(itemApps[i], LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_20);
+      lv_obj_set_style_local_bg_opa(itemApps[i], LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_50);
       lv_obj_set_style_local_radius(itemApps[i], LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 57);
       lv_obj_set_style_local_bg_color(itemApps[i], LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_AQUA);
 
@@ -86,12 +62,6 @@ List::List(uint8_t screenID,
       lv_label_set_text_fmt(labelBt, " %s", applications[i].name);
     }
   }
-
-  lv_obj_t* backgroundLabel = lv_label_create(lv_scr_act(), nullptr);
-  lv_label_set_long_mode(backgroundLabel, LV_LABEL_LONG_CROP);
-  lv_obj_set_size(backgroundLabel, LV_HOR_RES, LV_VER_RES);
-  lv_obj_set_pos(backgroundLabel, 0, 0);
-  lv_label_set_text_static(backgroundLabel, "");
 }
 
 List::~List() {
