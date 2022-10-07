@@ -1,6 +1,22 @@
 #!/bin/sh
 set -eu
+set +x
 IMGTOOL_URL="git+https://github.com/mcu-tools/mcuboot.git#egg=imgtool&subdirectory=scripts"
+
+if ! python3 -m pip --version; then
+    sudo apt update && sudo apt install \
+        --no-install-recommends \
+        --assume-yes \
+        python3-pip
+fi
+
+if ! python3 -m venv --help; then
+    sudo apt update && sudo apt install \
+        --no-install-recommends \
+        --assume-yes \
+        python3-venv
+fi
+
 
 if ! command -v imgtool; then
     if [ -f ~/.local/bin/imgtool ]; then
@@ -46,7 +62,7 @@ if ! command -v adafruit-nrfutil; then
     fi
 fi
 
-cd ~/projects/InfiniTime
+cd ~/projects/InfiniTime || cd "$*"
 imgtool create \
     --align 4 \
     --version 1.0.0 \
