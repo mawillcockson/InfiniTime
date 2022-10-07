@@ -146,7 +146,7 @@ std::unique_ptr<Screen> Clock::WatchFaceTerribleScreen() {
                                                       dateTimeController,
                                                       batteryController,
                                                       bleController,
-                                                      notificatioManager,
+                                                      notificationManager,
                                                       settingsController,
                                                       heartRateController,
                                                       motionController);
